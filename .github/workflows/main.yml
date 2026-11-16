@@ -1,0 +1,26 @@
+name: CI Pipeline - Pruebas Automatizadas
+
+# Evento disparador: se ejecuta en cada push o pull request[cite: 1, 2]
+on: [push, pull_request]
+
+jobs:
+  build-and-test:
+    # Sistema operativo del servidor virtual (Runner)[cite: 1, 2]
+    runs-on: ubuntu-latest
+
+    steps:
+      # Paso 1: Descargar el código del repositorio[cite: 1, 2]
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Paso 2: Instalar y configurar Java (JDK 17)[cite: 1, 2]
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      # Paso 3: Ejecutar las pruebas automatizadas con Maven
+      - name: Run tests with Maven
+        run: mvn -B test
